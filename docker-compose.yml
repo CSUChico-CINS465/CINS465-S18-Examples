@@ -1,7 +1,12 @@
 version: "3"
 services:
   web:
-    build: code
+    #build: code
+    image: javawolfpack/web:assigment2
+    expose:
+      - "8000"
+    ports:
+      - "8000:8000"
     volumes:
       - ./code/:/code/
-    command: python
+    command: python manage.py runserver 0.0.0.0:8000
