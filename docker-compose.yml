@@ -1,8 +1,8 @@
 version: "3"
 services:
   web:
-    #build: code
-    image: javawolfpack/web:assigment2
+    build: code
+    # image: javawolfpack/web:assigment2
     expose:
       - "8000"
     ports:
