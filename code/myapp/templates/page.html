@@ -7,13 +7,21 @@ Page {{ page_template }}
 {% block body %}
 <div class="grid-container">
   <div class="grid-x grid-padding-x">
-    <div class="large-12">
+    <div class="large-12 medium-12 small-12">
       <h2>Page {{ page_template }}</h2>
-      <ul>
+    </div>
+    <div class="large-12 medium-8 small-12">
+      <div class="grid-container">
+        <div class="grid-x grid-padding-x">
       {% for item in example_list %}
-        <li>{{ item }}</li>
+
+        <div class="large-offset-1 medium-offset-2 large-3 medium-3 small-6">
+          <h3>{{ item }}</h3>
+        </div></li>
       {% endfor %}
-      </ul>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
