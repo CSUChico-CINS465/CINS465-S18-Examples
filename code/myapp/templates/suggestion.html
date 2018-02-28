@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}
+Suggestions
+{% endblock %}
+
+{% block body %}
+<div class="grid-container">
+  <div class="grid-x grid-padding-x">
+    <div class="large-12 medium-12 small-12">
+      <h2>Suggestions</h2>
+    </div>
+    <div class="large-12 medium-8 small-12">
+      <ul>
+      {% for item in suggestion_list %}
+            <li>{{ item.id }}:{{ item.suggestion }}</li>
+      {% endfor %}
+      </ul>
+
+    </div>
+  </div>
+</div>
+{% endblock %}
