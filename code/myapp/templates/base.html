@@ -14,10 +14,12 @@
     <h1>CINS465</h1>
     {% block body %}
     {% endblock %}
-
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <script src="{% static "js/vendor/jquery.js" %}"></script>
     <script src="{% static "js/vendor/what-input.js" %}"></script>
     <script src="{% static "js/vendor/foundation.js" %}"></script>
     <script src="{% static "js/app.js" %}"></script>
+    {% block scripts %}
+    {% endblock %}
   </body>
 </html>
