@@ -27,7 +27,12 @@ Suggestions
       <ul>
             <li v-for="item in suggestions">
               {% verbatim %}
-              {{ item.id }}:{{ item.suggestion }}
+              {{ item.id }}:{{ item.suggestion }} - Created on {{ item.created_on }}
+                <ul>
+                  <li v-for="comm in item.comments">
+                    {{ comm.comment }} - {{ comm.created_on }}
+                  </li>
+                </ul>
               {% endverbatim %}
             </li>
       </ul>

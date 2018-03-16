@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 
-from .models import Suggestion_Model
+from .models import *
 from .forms import Suggestion_Form
 
 from django.views.decorators.csrf import csrf_exempt
@@ -26,9 +26,9 @@ def suggestion_view(request):
             form = Suggestion_Form()
     else:
         form = Suggestion_Form()
-    suggestion_list = Suggestion_Model.objects.all()
+    # suggestion_list = Suggestion_Model.objects.all()
     context={
-        "suggestion_list":suggestion_list,
+        # "suggestion_list":suggestion_list,
         "form":form
         }
     return render(request, 'suggestion.html',context)
@@ -68,11 +68,22 @@ def suggestion_api(request):
         suggestion_dictionary = {}
         suggestion_dictionary["suggestions"]=[]
         for suggest in suggestion_list:
+            comment_list = Comment_Model.objects.filter(suggestion=suggest)
+            #print(comment_list)
+            comment_json = []
+            for comm in comment_list:
+                comment_json+=[{
+                    "comment":comm.comment,
+                    "id":comm.id,
+                    "created_on":comm.created_on
+                }]
             suggestion_dictionary["suggestions"] += [{
                 "id":suggest.id,
-                "suggestion":suggest.suggestion
+                "comments":comment_json,
+                "suggestion":suggest.suggestion,
+                "created_on":suggest.created_on
             }]
-        print(suggestion_dictionary)
+        # print(suggestion_dictionary)
         return JsonResponse(suggestion_dictionary)
 
 def page(request, page_num):
