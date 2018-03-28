@@ -11,7 +11,34 @@
     <link rel="stylesheet" href="{% static "/css/app.css" %}">
   </head>
   <body>
-    <h1>CINS465</h1>
+    <div class="top-bar">
+      <div class="top-bar-left">
+        <ul class="dropdown menu" data-dropdown-menu>
+          <li class="menu-text">Suggester</li>
+          <!-- <li>
+            <a href="#">One</a>
+            <ul class="menu vertical">
+              <li><a href="#">One</a></li>
+              <li><a href="#">Two</a></li>
+              <li><a href="#">Three</a></li>
+            </ul>
+          </li> -->
+          <li><a href="/">Home</a></li>
+        </ul>
+      </div>
+      <div class="top-bar-right">
+        <ul class="menu">
+          {% if user.is_authenticated %}
+          <!-- <li><a href="/accounts/">{{ user.username }}</a></li> -->
+          <!-- <li><a href="/suggest/">Add Suggestion</a></li> -->
+          <li><a href="/logout/">Logout</a></li>
+          {% else %}
+          <li><a href="/register/">Register</a></li>
+          <li><a href="/login/">Log In</a></li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
     {% block body %}
     {% endblock %}
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>

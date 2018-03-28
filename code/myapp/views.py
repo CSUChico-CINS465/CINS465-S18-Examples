@@ -1,8 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 
 from .models import *
-from .forms import Suggestion_Form
+from .forms import Suggestion_Form, registration_form
+from django.contrib.auth.decorators import login_required
 
 from django.views.decorators.csrf import csrf_exempt
 
@@ -15,6 +16,7 @@ def index(request):
     #return HttpResponse("Hello World")
     return render(request, 'index.html')
 
+@login_required(login_url='/login/')
 def suggestion_view(request):
     if request.method == 'POST':
         form = Suggestion_Form(request.POST)
@@ -100,3 +102,14 @@ def page(request, page_num):
         "example_list":example_list
         }
     return render(request, 'page.html',context)
+
+def register(request):
+    if request.method == 'POST':
+        form = registration_form(request.POST)
+        if form.is_valid():
+            form.save(commit=True)
+            return redirect("/")
+    else:
+        form = registration_form()
+    context = {"form":form}
+    return render(request,"registration/register.html",context)
