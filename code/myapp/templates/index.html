@@ -15,7 +15,7 @@ Hello World
       <ul>
             <li v-for="item in suggestions">
               {% verbatim %}
-              {{ item.id }}:{{ item.suggestion }} - Created on {{ item.created_on }} - {{ item.author }}
+              <img v-bind:src="'/media/'+ item.image" v-bind:alt="item.image_description" width="42" > {{ item.id }}:{{ item.suggestion }} - Created on {{ item.created_on }} - {{ item.author }}
                 <ul>
                   <li v-for="comm in item.comments">
                     {{ comm.comment }} - {{ comm.created_on }} - {{ comm.author }}

@@ -12,11 +12,9 @@ Add Suggestion
 <div class="grid-container">
   <div class="grid-x grid-padding-x">
     <div class="large-4 medium-4 small-12 large-offset-4 medium-offset-4 cell">
-      <form action="/suggestion/" method="post">
+      <form action="/suggestion/" method="post" enctype="multipart/form-data">
           {% csrf_token %}
-          {{ form.suggestion.errors }}
-          {{ form.suggestion.label_tag }}
-          {{ form.suggestion }}
+          {{ form }}
           <input type="submit" class="button expanded" value="Submit" />
       </form>
     </div>

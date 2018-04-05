@@ -19,11 +19,13 @@ def index(request):
 @login_required(login_url='/login/')
 def suggestion_view(request):
     if request.method == 'POST':
-        form = Suggestion_Form(request.POST)
+        form = Suggestion_Form(request.POST, request.FILES)
         if form.is_valid():
             suggest = Suggestion_Model(
                 suggestion=form.cleaned_data['suggestion'],
-                author=request.user
+                author=request.user,
+                image=form.cleaned_data['image'],
+                image_description=form.cleaned_data['image_description']
             )
             suggest.save()
             return redirect("/")
@@ -104,12 +106,15 @@ def suggestion_api(request):
                     "author":comm.author.username,
                     "created_on":comm.created_on
                 }]
+            print(suggest.image.name)
             suggestion_dictionary["suggestions"] += [{
                 "id":suggest.id,
                 "comments":comment_json,
                 "suggestion":suggest.suggestion,
                 "created_on":suggest.created_on,
-                "author":suggest.author.username
+                "author":suggest.author.username,
+                "image":suggest.image.name,
+                "image_description":suggest.image_description
             }]
         # print(suggestion_dictionary)
         return JsonResponse(suggestion_dictionary)

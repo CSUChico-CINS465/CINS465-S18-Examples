@@ -20,7 +20,9 @@ def verifySuggestion2(value):
     return value
 
 class Suggestion_Form(forms.Form):
-    suggestion = forms.CharField(validators=[verifySuggestion2,verifySuggestion,validate_slug],label='Suggestion', max_length=240)
+    suggestion = forms.CharField(label='Suggestion', max_length=240)
+    image = forms.ImageField(label="Image File")
+    image_description = forms.CharField(label='Image Description', max_length=240)
 
 class Comment_Form(forms.Form):
     comment = forms.CharField(

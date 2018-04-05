@@ -13,6 +13,10 @@ class Suggestion_Model(models.Model):
                         User,
                         on_delete=models.CASCADE
                 )
+    image = models.ImageField(
+        max_length=144,
+        upload_to='uploads/%Y/%m/%d/')
+    image_description = models.CharField(max_length=240)
 
     def __str__(self):
         return "Suggestion " + str(self.id) + ": " + str(self.suggestion)
