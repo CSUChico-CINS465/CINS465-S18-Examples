@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 
 from .models import *
-from .forms import Suggestion_Form, registration_form
+from .forms import *
 from django.contrib.auth.decorators import login_required
 
 from django.views.decorators.csrf import csrf_exempt
@@ -22,18 +22,42 @@ def suggestion_view(request):
         form = Suggestion_Form(request.POST)
         if form.is_valid():
             suggest = Suggestion_Model(
-                suggestion=form.cleaned_data['suggestion']
+                suggestion=form.cleaned_data['suggestion'],
+                author=request.user
             )
             suggest.save()
-            form = Suggestion_Form()
+            return redirect("/")
     else:
         form = Suggestion_Form()
+    #comm_form=Comment_Form()
     # suggestion_list = Suggestion_Model.objects.all()
     context={
         # "suggestion_list":suggestion_list,
-        "form":form
+        "form":form,
+        #"comm_form":comm_form
         }
     return render(request, 'suggestion.html',context)
+
+@login_required(login_url='/login/')
+def comment_view(request, suggest_id):
+    if request.method == 'POST':
+        comm_form = Comment_Form(request.POST)
+        if comm_form.is_valid():
+            comm_form.save(suggest_id,request.user)
+            return redirect("/")
+            #form = Suggestion_Form()
+    else:
+        comm_form = Comment_Form()
+    #form = Suggestion_Form()
+    # suggestion_list = Suggestion_Model.objects.all()
+    context={
+        # "suggestion_list":suggestion_list,
+        #"form":form,
+        "comm_form":comm_form,
+        "suggest_id":suggest_id
+        }
+    return render(request, 'comment.html',context)
+
 
 @csrf_exempt
 def suggestion_api(request):
@@ -77,13 +101,15 @@ def suggestion_api(request):
                 comment_json+=[{
                     "comment":comm.comment,
                     "id":comm.id,
+                    "author":comm.author.username,
                     "created_on":comm.created_on
                 }]
             suggestion_dictionary["suggestions"] += [{
                 "id":suggest.id,
                 "comments":comment_json,
                 "suggestion":suggest.suggestion,
-                "created_on":suggest.created_on
+                "created_on":suggest.created_on,
+                "author":suggest.author.username
             }]
         # print(suggestion_dictionary)
         return JsonResponse(suggestion_dictionary)

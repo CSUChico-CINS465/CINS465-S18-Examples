@@ -8,6 +8,7 @@ from django.contrib.auth import views as adminviews
 urlpatterns = [
     path('',views.index),
     path('suggestion/',views.suggestion_view),
+    path('comment/<int:suggest_id>/',views.comment_view),
     path('suggestions/',views.suggestion_api),
     path('page<int:page_num>/',views.page),
     path('login/', adminviews.login, {

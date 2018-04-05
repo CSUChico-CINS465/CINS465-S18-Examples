@@ -3,21 +3,20 @@
 {% load static %}
 
 {% block title %}
-Add Suggestion
+Add Comment
 {% endblock %}
 
 {% block body %}
 
-</div>
 <div class="grid-container">
   <div class="grid-x grid-padding-x">
     <div class="large-4 medium-4 small-12 large-offset-4 medium-offset-4 cell">
-      <form action="/suggestion/" method="post">
+      <form action="/comment/{{ suggest_id }}/" method="post">
           {% csrf_token %}
-          {{ form.suggestion.errors }}
-          {{ form.suggestion.label_tag }}
-          {{ form.suggestion }}
-          <input type="submit" class="button expanded" value="Submit" />
+          {{ comm_form.errors }}
+          {{ comm_form.comment.label_tag }}
+          {{ comm_form.comment }}
+          <input type="submit" class="button expanded" value="Comment" />
       </form>
     </div>
   </div>
