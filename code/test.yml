@@ -1,0 +1,18 @@
+version: "3"
+services:
+  web:
+    image: javawolfpack/web
+    expose:
+      - "8000"
+    command: gunicorn -w 2 -b :8000 myproj.wsgi
+    
+  nginx:
+    restart: always
+    image: javawolfpack/nginx
+    depends_on:
+      - web
+    ports:
+      - "80:80"
+#       - "443:443"
+    links:
+      - web:web
