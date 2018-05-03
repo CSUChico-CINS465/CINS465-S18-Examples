@@ -2,7 +2,7 @@ FROM python
 ENV PYTHONUNBUFFERED 1
 RUN mkdir /code
 WORKDIR /code
-ADD /code/* /code/
+ADD /code/ /code/
 RUN pip install -r requirements.txt
 #Create a new group
 RUN groupadd -r djangouser
