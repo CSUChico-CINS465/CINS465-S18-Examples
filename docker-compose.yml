@@ -1,10 +1,11 @@
 version: "3"
 services:
   web:
-    build: code
+    image: javawolfpack/cins465web:latest
+    #build: code
     depends_on:
        - postgres
-    # image: javawolfpack/web:assigment2
+    
     expose:
       - "8000"
     ports:
