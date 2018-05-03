@@ -8,27 +8,28 @@ services:
     
     expose:
       - "8000"
-    ports:
-       - "8000:8000"
+#     ports:
+#        - "8000:8000"
     links:
       - postgres:postgres
-    volumes:
-      - ./code/:/code/
-    #command: python manage.py runserver 0.0.0.0:8000
+#     volumes:
+#       - ./code/:/code/
+#     #command: python manage.py runserver 0.0.0.0:8000
     command: gunicorn -w 2 -b :8000 myproj.wsgi
     
-#   nginx:
-#     restart: always
-#     build: ./nginx/
-#     depends_on:
-#       - web
-#     ports:
-#       - "80:80"
-# #       - "443:443"
-#     volumes:
-#        - ./code/static:/static
-#     links:
-#       - web:web
+  nginx:
+    restart: always     
+    #build: ./nginx/
+    image: javawolfpack/cins465nginx:latest
+    depends_on:
+      - web
+    ports:
+      - "80:80"       
+      - "443:443"
+    volumes:
+       - ./code/static:/static
+    links:
+      - web:web
       
   postgres:
     restart: always
