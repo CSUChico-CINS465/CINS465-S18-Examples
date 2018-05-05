@@ -1,7 +1,7 @@
-FROM tutum/nginx
-RUN rm /etc/nginx/sites-enabled/default
+FROM nginx:latest
+RUN rm /etc/nginx/conf.d/default.conf
 RUN mkdir /etc/nginx/ssl
 ADD ./nginx/ssl/ /etc/nginx/ssl
 RUN mkdir /static/
 ADD ./code/static/ /static/
-ADD ./nginx/sites-enabled/ /etc/nginx/sites-enabled/
+COPY ./nginx/sites-enabled /etc/nginx/conf.d

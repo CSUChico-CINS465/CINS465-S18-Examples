@@ -17,19 +17,34 @@ services:
 #     #command: python manage.py runserver 0.0.0.0:8000
     command: gunicorn -w 2 -b :8000 myproj.wsgi
     
+#   nginx:
+#     restart: always     
+#     #build: ./nginx/
+#     image: javawolfpack/cins465nginx:latest
+#     depends_on:
+#       - web
+#     ports:
+#       - "80:80"       
+#       - "443:443"
+# #     volumes:
+# #        - ./code/static:/static
+#     links:
+#       - web:web
+
   nginx:
-    restart: always     
-    #build: ./nginx/
-    image: javawolfpack/cins465nginx:latest
+    restart: always
+    image: nginx
     depends_on:
       - web
-    ports:
-      - "80:80"       
-      - "443:443"
-#     volumes:
-#        - ./code/static:/static
     links:
       - web:web
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/mysite.template
+      - ./nginx/ssl/:/etc/nginx/ssl/
+    ports:
+      - "80:80"
+      - "443:443"
+    command: /bin/bash -c "envsubst < /etc/nginx/conf.d/mysite.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
       
   postgres:
     restart: always
